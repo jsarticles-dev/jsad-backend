@@ -13,7 +13,7 @@ const NewsletterSchema = new Schema(
   }
 );
 
-const NewsletterModel = model("Letter", NewsletterSchema);
+const NewsletterModel = model("Newsletter", NewsletterSchema);
 
 const addNewNewsletter = async (content: string, dateOfDispatch: Date) => {
   return await NewsletterModel.create({ content, dateOfDispatch });
@@ -74,4 +74,5 @@ export {
   addNewNewsletter,
   deleteNewsletterById,
   findNewsletters,
+  NewsletterModel,
 };
