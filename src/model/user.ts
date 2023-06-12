@@ -44,7 +44,7 @@ const findUserById = async (id: string) => {
  * @param {string[]} ids - Array of user ids
  */
 const findUsers = async (ids: string[]) => {
-  if (ids.length > 0) {
+  if (ids && ids.length > 0) {
     return await UserModel.find({
       _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
     });
@@ -55,13 +55,18 @@ const findUsers = async (ids: string[]) => {
 
 /**
  * It finds users who have not sent newsletter today.
- * @param {Types.ObjectId} idOfNewsLetter - Id of newsletter. */
+ * @param {Types.ObjectId} idOfNewsLetter - Id of newsletter.
+ * */
 const findUsersWithoutEmailToday = async (
   idOfNewsLetter: mongoose.Types.ObjectId
 ) => {
   return await UserModel.find({
     sentNewsletters: { $nin: [idOfNewsLetter] },
   });
+};
+
+const findUserByEmail = async (email: string) => {
+  return await UserModel.findOne({ email });
 };
 
 export {
@@ -71,4 +76,5 @@ export {
   findUsers,
   findUsersWithoutEmailToday,
   UserModel,
+  findUserByEmail,
 };

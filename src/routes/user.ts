@@ -1,10 +1,21 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router } from "express";
+import {
+  addUser,
+  deleteUser,
+  findAllUsers,
+  findUser,
+} from "../controller/user";
 
 const userRouter: Router = express.Router();
 
-userRouter.get("/", (req: Request, res: Response) => {
-  //const { body } = req;
-  res.send("Selamm");
-});
+/* GET Requests */
+userRouter.get("/:id", findUser);
+userRouter.get("/", findAllUsers);
+
+/* POST Requests */
+userRouter.post("/", addUser);
+
+/* DELETE  Requests */
+userRouter.delete("/:id", deleteUser);
 
 export default userRouter;
