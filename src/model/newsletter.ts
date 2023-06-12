@@ -4,6 +4,7 @@ const { Schema, model, Types } = mongoose;
 
 const NewsletterSchema = new Schema(
   {
+    header: { type: String, required: true },
     content: { type: String, required: true },
     dateOfDispatch: { type: Date, required: true },
     isSent: { type: Boolean, required: true, default: false },
@@ -15,8 +16,12 @@ const NewsletterSchema = new Schema(
 
 const NewsletterModel = model("Newsletter", NewsletterSchema);
 
-const addNewNewsletter = async (content: string, dateOfDispatch: Date) => {
-  return await NewsletterModel.create({ content, dateOfDispatch });
+const addNewNewsletter = async (
+  content: string,
+  dateOfDispatch: Date,
+  header: string
+) => {
+  return await NewsletterModel.create({ content, dateOfDispatch, header });
 };
 
 const updateNewsletterById = async (
@@ -24,6 +29,7 @@ const updateNewsletterById = async (
   fields: {
     content?: string;
     dateOfDispatch?: Date;
+    header?: string;
     isSent?: boolean;
   }
 ) => {
