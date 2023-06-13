@@ -13,6 +13,7 @@ app.use(cors(getCorsOptions()));
 app.use(express.json());
 
 app.use("/users", userRouter);
+app.use("/emplpoyees", userRouter);
 
 app.listen(process.env.PORT, () => {
   connectToDB();

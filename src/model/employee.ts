@@ -38,9 +38,13 @@ const findEmployeeById = async (id: string) => {
 };
 
 const findEmployees = async (ids: string[]) => {
-  return await EmployeeModel.find({
-    _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
-  });
+  if (ids && ids.length > 0) {
+    return await EmployeeModel.find({
+      _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
+    });
+  }
+
+  return await EmployeeModel.find();
 };
 const updateEmployeeById = async (
   id: string,
