@@ -24,6 +24,12 @@ const UserSchema = new Schema(
 
 const UserModel = model("User", UserSchema);
 
+/**
+ * This function creates a new user.
+ * @param {string} email - Email of the user.
+ * @param {object} gdprInfo - Information about GDPR.
+ * @returns - The created user.
+ */
 const createUser = async (
   email: string,
   gdprInfo: { isAccepted: boolean; ip: string }
@@ -31,10 +37,20 @@ const createUser = async (
   return await UserModel.create({ email, gdprInfo });
 };
 
+/**
+ * This function deletes a user by id.
+ * @param {string} id - Id of the user.
+ * @returns - The deleted user.
+ */
 const deleteUserById = async (id: string) => {
   return await UserModel.findByIdAndDelete(new Types.ObjectId(id));
 };
 
+/**
+ * This function finds a user by id.
+ * @param {string} id - Id of the user.
+ * @returns - The found user.
+ */
 const findUserById = async (id: string) => {
   return await UserModel.findById(new Types.ObjectId(id));
 };
@@ -65,6 +81,11 @@ const findUsersWithoutEmailToday = async (
   });
 };
 
+/**
+ * This function finds a user by email.
+ * @param {string} email - Email of the user.
+ * @returns - The found user.
+ * */
 const findUserByEmail = async (email: string) => {
   return await UserModel.findOne({ email });
 };
