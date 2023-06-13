@@ -5,12 +5,13 @@ import {
   findAllUsers,
   findUser,
 } from "../controller/user";
+import isEmployeeAuthenticated from "../middlewares/EmployeeAuthentication";
 
 const userRouter: Router = express.Router();
 
 /* GET Requests */
-userRouter.get("/:id", findUser);
-userRouter.get("/", findAllUsers);
+userRouter.get("/:id", isEmployeeAuthenticated, findUser);
+userRouter.get("/", isEmployeeAuthenticated, findAllUsers);
 
 /* POST Requests */
 userRouter.post("/", addUser);

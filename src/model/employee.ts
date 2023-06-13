@@ -24,12 +24,17 @@ const EmployeeSchema = new Schema({
 
 const EmployeeModel = mongoose.model("Employee", EmployeeSchema);
 
-const addNewEmoloyee = async (
-  name: string,
-  password: string,
-  role: string,
-  email: string
-) => {
+const addNewEmoloyee = async ({
+  name,
+  password,
+  role,
+  email,
+}: {
+  name: string;
+  password: string;
+  role: string;
+  email: string;
+}) => {
   return await EmployeeModel.create({ name, password, role, email });
 };
 
@@ -46,6 +51,11 @@ const findEmployees = async (ids: string[]) => {
 
   return await EmployeeModel.find();
 };
+
+const findEmployeeByEmail = async (email: string) => {
+  return await EmployeeModel.findOne({ email });
+};
+
 const updateEmployeeById = async (
   id: string,
   fields: { name: string; password: string; role: string; email: string }
@@ -63,4 +73,5 @@ export {
   findEmployees,
   updateEmployeeById,
   deleteEmployeeById,
+  findEmployeeByEmail,
 };

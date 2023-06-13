@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
 import {
+  addNewEmoloyee,
   deleteEmployeeById,
+  findEmployeeByEmail,
   findEmployeeById,
   findEmployees,
   updateEmployeeById,
 } from "../model/employee";
+import bcrypt from "bcrypt";
+import { ISessionDataEmployee } from "../types/express-session/index";
 
 const findEmployee = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -64,4 +68,56 @@ const deleteEmployee = async (req: Request, res: Response) => {
   }
 };
 
-export { findAllEmployees, deleteEmployee, findEmployee, updateEmployee };
+const loginAsEmployee = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const employee = await findEmployeeByEmail(email);
+  if (!employee) {
+    return res.status(400).json("Employee not found");
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, employee.password);
+
+  if (!isPasswordValid) {
+    return res.status(400).json("Invalid password");
+  }
+
+  (req.session as ISessionDataEmployee).employee = {
+    id: employee.id,
+    role: employee.role,
+  };
+
+  return res.status(200).json(employee);
+};
+
+const registerAsEmployee = async (req: Request, res: Response) => {
+  const { name, email, password, role } = req.body;
+
+  const employee = await findEmployeeByEmail(email);
+
+  if (employee) {
+    return res.status(400).json("Employee already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    const newEmployee = await addNewEmoloyee({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    });
+    return res.status(200).json(newEmployee);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
+export {
+  registerAsEmployee,
+  findAllEmployees,
+  deleteEmployee,
+  findEmployee,
+  updateEmployee,
+  loginAsEmployee,
+};
