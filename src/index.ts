@@ -8,6 +8,7 @@ import helmet from "helmet";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import employeeRouter from "./routes/employee";
+import logger from "./configs/logger";
 
 const app: Express = express();
 
@@ -31,6 +32,6 @@ app.use("/users", userRouter);
 app.use("/employees", employeeRouter);
 
 app.listen(process.env.PORT, () => {
+  logger.info(`Listening on port ${process.env.PORT}`);
   connectToDB();
-  console.log(`Listening on port ${process.env.PORT}`);
 });

@@ -1,5 +1,6 @@
 import { ENVIRONMENTS } from "../constants/environmentConstants";
 import mongoose from "mongoose";
+import logger from "./logger";
 
 const getConnectionString = () => {
   const DB_DOMAIN: string = process.env.DB_DOMAIN as string;
@@ -16,9 +17,9 @@ const connectToDB = async () => {
   const CONNECTION_STRING = getConnectionString();
   try {
     await mongoose.connect(CONNECTION_STRING);
-    console.log("Connected to DB");
+    logger.info("Connected to DB");
   } catch (error) {
-    console.log("Error: ", error);
+    logger.error(error);
   }
 };
 

@@ -1,5 +1,6 @@
 import { CorsOptions } from "cors";
 import { ENVIRONMENTS } from "../constants/environmentConstants";
+import logger from "./logger";
 
 const getCorsOptions = (): CorsOptions => {
   let whitelist: string[] = [];
@@ -13,7 +14,7 @@ const getCorsOptions = (): CorsOptions => {
   }
 
   if (whitelist.length === 0) {
-    console.log("Whitelist cannot be empty!");
+    logger.error("Whitelist cannot be empty!");
     throw new Error("Something went wrong");
   }
 

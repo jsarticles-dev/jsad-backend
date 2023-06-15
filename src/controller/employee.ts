@@ -9,6 +9,7 @@ import {
 } from "../model/employee";
 import bcrypt from "bcrypt";
 import { ISessionDataEmployee } from "../types/express-session/index";
+import logger from "../configs/logger";
 
 const findEmployee = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -62,8 +63,10 @@ const deleteEmployee = async (req: Request, res: Response) => {
 
   try {
     await deleteEmployeeById(id);
+    logger.info(`Employee with id ${id} deleted`);
     return res.sendStatus(200);
   } catch (error) {
+    logger.error(`Error deleting employee with id ${id} ${error}`);
     return res.status(400).json(error);
   }
 };
@@ -108,8 +111,10 @@ const registerAsEmployee = async (req: Request, res: Response) => {
       password: hashedPassword,
       role,
     });
+    logger.info(`New employee ${newEmployee.name} created`);
     return res.status(200).json(newEmployee);
   } catch (error) {
+    logger.error(`Error while creating employee ${error}`);
     return res.status(400).json(error);
   }
 };
