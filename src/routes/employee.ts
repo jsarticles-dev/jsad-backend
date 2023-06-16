@@ -8,21 +8,48 @@ import {
   updateEmployee,
 } from "../controller/employee";
 import isEmployeeAuthenticated from "../middlewares/EmployeeAuthentication";
+import authorizationMiddleware from "../middlewares/EmployeeAuthorization";
+import { EMPLOYEE_ROLES } from "../constants/generalConstants";
 
 const employeeRouter: Router = express.Router();
 
 /* GET requests */
-employeeRouter.get("/", isEmployeeAuthenticated, findAllEmployees);
-employeeRouter.get("/:id", isEmployeeAuthenticated, findEmployee);
+employeeRouter.get(
+  "/",
+  isEmployeeAuthenticated,
+  authorizationMiddleware([EMPLOYEE_ROLES.ADMIN, EMPLOYEE_ROLES.EDITOR]),
+  findAllEmployees
+);
+employeeRouter.get(
+  "/:id",
+  isEmployeeAuthenticated,
+  authorizationMiddleware([EMPLOYEE_ROLES.ADMIN]),
+  findEmployee
+);
 
 /* POST requests  */
 employeeRouter.post("/login", loginAsEmployee);
-employeeRouter.post("/register", isEmployeeAuthenticated, registerAsEmployee);
+employeeRouter.post(
+  "/register",
+  isEmployeeAuthenticated,
+  authorizationMiddleware([EMPLOYEE_ROLES.ADMIN]),
+  registerAsEmployee
+);
 
 /* PUT requests  */
-employeeRouter.put("/:id", isEmployeeAuthenticated, updateEmployee);
+employeeRouter.put(
+  "/:id",
+  isEmployeeAuthenticated,
+  authorizationMiddleware([EMPLOYEE_ROLES.ADMIN, EMPLOYEE_ROLES.EDITOR]),
+  updateEmployee
+);
 
 /* DELETE requests */
-employeeRouter.delete("/:id", isEmployeeAuthenticated, deleteEmployee);
+employeeRouter.delete(
+  "/:id",
+  isEmployeeAuthenticated,
+  authorizationMiddleware([EMPLOYEE_ROLES.ADMIN]),
+  deleteEmployee
+);
 
 export default employeeRouter;
