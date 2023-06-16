@@ -29,6 +29,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "bcrypt": "^5.1.0",
