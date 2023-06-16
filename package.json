@@ -4,7 +4,8 @@
   "description": "Backend for jsartciles.dev",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc",
+    "build": "tsc",
+    "start": "env-cmd -f .env.production node dist/index.js",
     "lint": "eslint . --ext .ts",
     "start:dev": "NODE_ENV=development env-cmd -f .env.development nodemon"
   },

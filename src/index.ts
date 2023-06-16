@@ -30,6 +30,7 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 app.use("/employees", employeeRouter);
+app.get("/health", (req, res) => res.send("I'm alive!"));
 
 app.listen(process.env.PORT, () => {
   logger.info(`Listening on port ${process.env.PORT}`);
