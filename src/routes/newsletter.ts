@@ -11,8 +11,8 @@ import {
 const newsletterRouter: Router = express.Router();
 
 /* GET Requests */
-newsletterRouter.get("/", isEmployeeAuthenticated, findNewsLetters);
-newsletterRouter.get("/:id", isEmployeeAuthenticated, findNewsletter);
+newsletterRouter.get("/", findNewsLetters);
+newsletterRouter.get("/:id", findNewsletter);
 
 /* POST Requests */
 newsletterRouter.post("/", isEmployeeAuthenticated, createNewNewsletter);
