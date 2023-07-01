@@ -75,7 +75,7 @@ const findNewsletterById = async (id: string) => {
  * @param {string[]} ids - The ids of the newsletters.
  * @returns - The newsletters with the given ids.
  */
-const findNewsletters = async (ids: string[]) => {
+const findNewslettersByIds = async (ids: string[]) => {
   if (ids.length > 0) {
     return await NewsletterModel.find({
       _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
@@ -108,6 +108,6 @@ export {
   updateNewsletterById,
   addNewNewsletter,
   deleteNewsletterById,
-  findNewsletters,
+  findNewslettersByIds,
   NewsletterModel,
 };

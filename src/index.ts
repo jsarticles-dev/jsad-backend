@@ -9,6 +9,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import employeeRouter from "./routes/employee";
 import logger from "./configs/logger";
+import newsletterRouter from "./routes/newsletter";
 
 const app: Express = express();
 
@@ -30,6 +31,8 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 app.use("/employees", employeeRouter);
+app.use("/newsletters", newsletterRouter);
+
 app.get("/health", (req, res) => res.send("I'm alive!"));
 
 app.listen(process.env.PORT, () => {
