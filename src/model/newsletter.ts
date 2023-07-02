@@ -6,6 +6,7 @@ const NewsletterSchema = new Schema(
   {
     header: { type: String, required: true },
     content: { type: String, required: true },
+    number: { type: Number, default: 0 },
     dateOfDispatch: { type: Date, required: true },
     isSent: { type: Boolean, required: true, default: false },
   },
@@ -21,14 +22,21 @@ const NewsletterModel = model("Newsletter", NewsletterSchema);
  * @param {string}content - The content of the newsletter.
  * @param {Date} dateOfDispatch - The date of dispatch of the newsletter.
  * @param {string} header - The header of the newsletter.
+ * @param {number} number - The number of the newsletter
  * @returns - The newly created newsletter.
  */
 const addNewNewsletter = async (
   content: string,
   dateOfDispatch: Date,
-  header: string
+  header: string,
+  number: number
 ) => {
-  return await NewsletterModel.create({ content, dateOfDispatch, header });
+  return await NewsletterModel.create({
+    content,
+    dateOfDispatch,
+    header,
+    number,
+  });
 };
 
 /**
@@ -86,6 +94,13 @@ const findNewslettersByIds = async (ids: string[]) => {
 };
 
 /**
+ * This function returns last added newsletters.
+ */
+const findLastAddedNewsletter = async () => {
+  return await NewsletterModel.findOne({}).sort({ _id: -1 });
+};
+
+/**
  * This function will return newsletter that are not sent yet and are due to be sent today.
  *  */
 const findNewsletterToBeSent = async () => {
@@ -110,4 +125,5 @@ export {
   deleteNewsletterById,
   findNewslettersByIds,
   NewsletterModel,
+  findLastAddedNewsletter,
 };

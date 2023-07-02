@@ -1,6 +1,7 @@
 import {
   addNewNewsletter,
   deleteNewsletterById,
+  findLastAddedNewsletter,
   findNewsletterById,
   findNewslettersByIds,
   updateNewsletterById,
@@ -16,11 +17,19 @@ const createNewNewsletter = async (req: Request, res: Response) => {
       .json({ errorMessage: "Some required fields are missing!" });
   }
 
+  let numberOfNewsletter = 0;
+
+  const lastAddedNewsletter = await findLastAddedNewsletter();
+  if (lastAddedNewsletter) {
+    numberOfNewsletter = lastAddedNewsletter.number + 1;
+  }
+
   try {
     const newNewsletter = await addNewNewsletter(
       content,
       dateOfDispatch,
-      header
+      header,
+      numberOfNewsletter
     );
     return res.status(200).json(newNewsletter);
   } catch (error) {
