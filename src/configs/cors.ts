@@ -11,6 +11,9 @@ const getCorsOptions = (): CorsOptions => {
 
   if (process.env.NODE_ENV === ENVIRONMENTS.PRODUCTION) {
     whitelist = ["https://jsartciles.dev/"];
+  } else {
+    // For testing purposes.
+    whitelist = ["http://localhost:3000/"];
   }
 
   if (whitelist.length === 0) {

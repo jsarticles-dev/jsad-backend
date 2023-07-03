@@ -10,6 +10,9 @@ const getConnectionString = () => {
   if (process.env.NODE_ENV === ENVIRONMENTS.DEVELOPMENT) {
     return `mongodb://${DB_DOMAIN}:${DB_PORT}/${DB_NAME}?retryWrites=true&w=majority`;
   }
+  if (process.env.NODE_ENV === ENVIRONMENTS.TEST) {
+    return `mongodb://${DB_DOMAIN}:${DB_PORT}`;
+  }
   return "";
 };
 

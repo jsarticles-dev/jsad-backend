@@ -22,7 +22,7 @@ const addUser = async (req: Request, res: Response) => {
 
   const createdUser = await createUser(email, gdprInfo);
 
-  if (createdUser.id) {
+  if (createdUser._id) {
     logger.info(`User ${maskEmail(email)} created successfully!`);
     return res.status(200).json({
       message: "User created successfully",

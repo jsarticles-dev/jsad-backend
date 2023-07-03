@@ -2,7 +2,21 @@ import mongoose from "mongoose";
 
 const { Schema, model, Types } = mongoose;
 
-const GDPRSchema = new Schema(
+interface IGDPRSchema {
+  isAccepted: boolean;
+  ip: string;
+}
+
+interface IUser extends Document {
+  _id?: mongoose.Types.ObjectId;
+  email: string;
+  gdprInfo: IGDPRSchema;
+  sentNewsletters: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const GDPRSchema = new Schema<IGDPRSchema>(
   {
     isAccepted: { type: Boolean, required: true },
     ip: String,
@@ -22,7 +36,7 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-const UserModel = model("User", UserSchema);
+const UserModel = model<IUser>("User", UserSchema);
 
 /**
  * This function creates a new user.
@@ -33,8 +47,9 @@ const UserModel = model("User", UserSchema);
 const createUser = async (
   email: string,
   gdprInfo: { isAccepted: boolean; ip: string }
-) => {
-  return await UserModel.create({ email, gdprInfo });
+): Promise<IUser> => {
+  const user = await UserModel.create({ email, gdprInfo });
+  return user;
 };
 
 /**
@@ -42,7 +57,7 @@ const createUser = async (
  * @param {string} id - Id of the user.
  * @returns - The deleted user.
  */
-const deleteUserById = async (id: string) => {
+const deleteUserById = async (id: string): Promise<IUser | null> => {
   return await UserModel.findByIdAndDelete(new Types.ObjectId(id));
 };
 
@@ -51,7 +66,7 @@ const deleteUserById = async (id: string) => {
  * @param {string} id - Id of the user.
  * @returns - The found user.
  */
-const findUserById = async (id: string) => {
+const findUserById = async (id: string): Promise<IUser | null> => {
   return await UserModel.findById(new Types.ObjectId(id));
 };
 
@@ -59,7 +74,7 @@ const findUserById = async (id: string) => {
  * It finds users by ids. If ids is empty, it finds all users.
  * @param {string[]} ids - Array of user ids
  */
-const findUsers = async (ids: string[]) => {
+const findUsers = async (ids: string[]): Promise<IUser[]> => {
   if (ids && ids.length > 0) {
     return await UserModel.find({
       _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
@@ -86,7 +101,7 @@ const findUsersWithoutEmailToday = async (
  * @param {string} email - Email of the user.
  * @returns - The found user.
  * */
-const findUserByEmail = async (email: string) => {
+const findUserByEmail = async (email: string): Promise<IUser | null> => {
   return await UserModel.findOne({ email });
 };
 
