@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "env-cmd -f .env.production node dist/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest --forceExit",
+    "test": "jest --watch",
     "start:dev": "NODE_ENV=development env-cmd -f .env.development nodemon"
   },
   "repository": {
