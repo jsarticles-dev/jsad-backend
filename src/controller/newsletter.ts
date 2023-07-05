@@ -25,12 +25,12 @@ const createNewNewsletter = async (req: Request, res: Response) => {
   }
 
   try {
-    const newNewsletter = await addNewNewsletter(
+    const newNewsletter = await addNewNewsletter({
       content,
       dateOfDispatch,
       header,
-      numberOfNewsletter
-    );
+      number: numberOfNewsletter,
+    });
     return res.status(200).json(newNewsletter);
   } catch (error) {
     console.log(error);

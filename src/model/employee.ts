@@ -1,14 +1,7 @@
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
 import { EMPLOYEE_ROLES } from "../constants/generalConstants";
+import { IEmployee } from "../types/general";
 const { Schema, Types } = mongoose;
-
-interface IEmployee extends Document {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  password: string;
-  email: string;
-  role: EMPLOYEE_ROLES;
-}
 
 const EmployeeSchema = new Schema<IEmployee>({
   name: {

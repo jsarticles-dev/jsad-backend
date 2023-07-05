@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-
+import { INewsletter } from "../types/general";
 const { Schema, model, Types } = mongoose;
 
-const NewsletterSchema = new Schema(
+const NewsletterSchema = new Schema<INewsletter>(
   {
     header: { type: String, required: true },
     content: { type: String, required: true },
@@ -15,7 +15,7 @@ const NewsletterSchema = new Schema(
   }
 );
 
-const NewsletterModel = model("Newsletter", NewsletterSchema);
+const NewsletterModel = model<INewsletter>("Newsletter", NewsletterSchema);
 
 /**
  * This function will add a new newsletter to the database.
@@ -25,12 +25,17 @@ const NewsletterModel = model("Newsletter", NewsletterSchema);
  * @param {number} number - The number of the newsletter
  * @returns - The newly created newsletter.
  */
-const addNewNewsletter = async (
-  content: string,
-  dateOfDispatch: Date,
-  header: string,
-  number: number
-) => {
+const addNewNewsletter = async ({
+  content,
+  dateOfDispatch,
+  header,
+  number,
+}: {
+  content: string;
+  dateOfDispatch: Date;
+  header: string;
+  number: number;
+}): Promise<INewsletter> => {
   return await NewsletterModel.create({
     content,
     dateOfDispatch,
@@ -53,10 +58,13 @@ const updateNewsletterById = async (
     header?: string;
     isSent?: boolean;
   }
-) => {
+): Promise<INewsletter | null> => {
   return await NewsletterModel.findByIdAndUpdate(
     new Types.ObjectId(id),
-    fields
+    fields,
+    {
+      returnOriginal: false,
+    }
   );
 };
 
@@ -65,7 +73,9 @@ const updateNewsletterById = async (
  * @param {string} id - The id of the newsletter.
  * @returns - The deleted newsletter.
  */
-const deleteNewsletterById = async (id: string) => {
+const deleteNewsletterById = async (
+  id: string
+): Promise<INewsletter | null> => {
   return await NewsletterModel.findByIdAndDelete(new Types.ObjectId(id));
 };
 
@@ -74,7 +84,7 @@ const deleteNewsletterById = async (id: string) => {
  * @param {string} id - The id of the newsletter.
  * @returns - The newsletter with the given id.
  */
-const findNewsletterById = async (id: string) => {
+const findNewsletterById = async (id: string): Promise<INewsletter | null> => {
   return await NewsletterModel.findById(new Types.ObjectId(id));
 };
 
@@ -83,7 +93,7 @@ const findNewsletterById = async (id: string) => {
  * @param {string[]} ids - The ids of the newsletters.
  * @returns - The newsletters with the given ids.
  */
-const findNewslettersByIds = async (ids: string[]) => {
+const findNewslettersByIds = async (ids: string[]): Promise<INewsletter[]> => {
   if (ids.length > 0) {
     return await NewsletterModel.find({
       _id: { $in: ids.map((id) => new Types.ObjectId(id)) },
@@ -96,14 +106,14 @@ const findNewslettersByIds = async (ids: string[]) => {
 /**
  * This function returns last added newsletters.
  */
-const findLastAddedNewsletter = async () => {
+const findLastAddedNewsletter = async (): Promise<INewsletter | null> => {
   return await NewsletterModel.findOne({}).sort({ _id: -1 });
 };
 
 /**
  * This function will return newsletter that are not sent yet and are due to be sent today.
  *  */
-const findNewsletterToBeSent = async () => {
+const findNewsletterToBeSent = async (): Promise<INewsletter | null> => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);

@@ -100,7 +100,7 @@ describe("Employee Model", () => {
       await addNewEmoloyee(employee);
     }
 
-    let employees = await findEmployees();
+    const employees = await findEmployees();
 
     employees.forEach((employee) => {
       expect(employee).toBeInstanceOf(EmployeeModel);
@@ -130,14 +130,14 @@ describe("Employee Model", () => {
       },
     ];
 
-    let createdEmployeeIds: string[] = [];
+    const createdEmployeeIds: string[] = [];
 
     for (const employee of VALID_EMPLOYEES) {
       const createdEmployee = await addNewEmoloyee(employee);
       createdEmployeeIds.push(createdEmployee._id.toString());
     }
 
-    let employees = await findEmployees([
+    const employees = await findEmployees([
       createdEmployeeIds[0],
       createdEmployeeIds[1],
     ]);

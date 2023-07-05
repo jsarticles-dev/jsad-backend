@@ -1,20 +1,6 @@
 import mongoose from "mongoose";
-
+import { IUser, IGDPRSchema } from "../types/general";
 const { Schema, model, Types } = mongoose;
-
-interface IGDPRSchema {
-  isAccepted: boolean;
-  ip: string;
-}
-
-interface IUser extends Document {
-  _id?: mongoose.Types.ObjectId;
-  email: string;
-  gdprInfo: IGDPRSchema;
-  sentNewsletters: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 const GDPRSchema = new Schema<IGDPRSchema>(
   {
