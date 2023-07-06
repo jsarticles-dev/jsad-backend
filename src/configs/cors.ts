@@ -6,7 +6,7 @@ const getCorsOptions = (): CorsOptions => {
   let whitelist: string[] = [];
 
   if (process.env.NODE_ENV === ENVIRONMENTS.DEVELOPMENT) {
-    whitelist = ["http://localhost:3000/"];
+    whitelist = ["http://localhost:4000/", "http://localhost:3000"];
   }
 
   if (process.env.NODE_ENV === ENVIRONMENTS.PRODUCTION) {

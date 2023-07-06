@@ -8,8 +8,8 @@ import {
   updateEmployeeById,
 } from "../model/employee";
 import bcrypt from "bcrypt";
-import { ISessionDataEmployee } from "../types/express-session/index";
 import logger from "../configs/logger";
+import jwt from "jsonwebtoken";
 
 const findEmployee = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -84,13 +84,17 @@ const loginAsEmployee = async (req: Request, res: Response) => {
   if (!isPasswordValid) {
     return res.status(400).json("Invalid password");
   }
+  
+  const token = jwt.sign(
+    { id: employee.id, role: employee.role },
+    `${process.env.JWT_SECRET}`,
+    { expiresIn: "1w" }
+  );
 
-  (req.session as ISessionDataEmployee).employee = {
-    id: employee.id,
-    role: employee.role,
-  };
-
-  return res.status(200).json(employee);
+  return res.status(200).json({
+    success: true,
+    data: { id: employee.id, role: employee.role, token: token },
+  });
 };
 
 const registerAsEmployee = async (req: Request, res: Response) => {
