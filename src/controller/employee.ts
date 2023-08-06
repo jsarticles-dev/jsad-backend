@@ -84,7 +84,7 @@ const loginAsEmployee = async (req: Request, res: Response) => {
   if (!isPasswordValid) {
     return res.status(400).json("Invalid password");
   }
-  
+
   const token = jwt.sign(
     { id: employee.id, role: employee.role },
     `${process.env.JWT_SECRET}`,

@@ -3,17 +3,18 @@ import "dotenv/config";
 import userRouter from "./routes/user";
 import { getConnectionString } from "./configs/database";
 import cors from "cors";
-import getCorsOptions from "./configs/cors";
+//import getCorsOptions from "./configs/cors";
 import helmet from "helmet";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import employeeRouter from "./routes/employee";
 import newsletterRouter from "./routes/newsletter";
+import authRouter from "./routes/auth";
 
 const app: Express = express();
 
 app.use(helmet());
-app.use(cors(getCorsOptions()));
+app.use(cors());
 app.use(
   session({
     secret: process.env.SESSION_SECRET as string,
@@ -27,6 +28,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/employees", employeeRouter);
 app.use("/newsletters", newsletterRouter);

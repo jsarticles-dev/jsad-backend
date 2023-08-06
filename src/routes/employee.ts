@@ -36,8 +36,8 @@ employeeRouter.post(
   registerAsEmployee
 );
 
-/* PUT requests  */
-employeeRouter.put(
+/* PATCH requests  */
+employeeRouter.patch(
   "/:id",
   isEmployeeAuthenticated,
   authorizationMiddleware([EMPLOYEE_ROLES.ADMIN, EMPLOYEE_ROLES.EDITOR]),

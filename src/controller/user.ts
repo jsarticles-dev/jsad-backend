@@ -66,10 +66,11 @@ const deleteUser = async (req: Request, res: Response) => {
   try {
     await deleteUserById(id);
     logger.info(`User ${id} deleted successfully!`);
+    return res.send({ message: "User deleted successfully" });
   } catch (error) {
     logger.error(`User ${id} deletion failed ${error}`);
+    return res.status(400).json({ error: "Something went wrong!" });
   }
-  return res.sendStatus(200);
 };
 
 export { addUser, findUser, findAllUsers, deleteUser };
