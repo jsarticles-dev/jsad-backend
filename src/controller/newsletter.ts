@@ -71,8 +71,8 @@ const deleteNewsletter = async (req: Request, res: Response) => {
     return res.status(400).json({ errorMessage: "ID is missing!" });
   }
   try {
-    await deleteNewsletterById(id);
-    return true;
+    const deletedNewsletter = await deleteNewsletterById(id);
+    return res.status(200).json({ deletedNewsletter });
   } catch (error) {
     return res.status(500).json({ errorMessage: "Something went wrong!" });
   }
