@@ -1,18 +1,10 @@
 import mongoose from "mongoose";
-import { IUser, IGDPRSchema } from "../types/general";
+import { IUser } from "../types/general";
 const { Schema, model, Types } = mongoose;
 
-const GDPRSchema = new Schema<IGDPRSchema>(
-  {
-    isAccepted: { type: Boolean, required: true },
-    ip: String,
-  },
-  { timestamps: true }
-);
 const UserSchema = new Schema(
   {
     email: String,
-    gdprInfo: GDPRSchema,
     sentNewsletters: {
       type: [Schema.Types.ObjectId],
       ref: "Newsletter",
@@ -30,11 +22,8 @@ const UserModel = model<IUser>("User", UserSchema);
  * @param {object} gdprInfo - Information about GDPR.
  * @returns - The created user.
  */
-const createUser = async (
-  email: string,
-  gdprInfo: { isAccepted: boolean; ip: string }
-): Promise<IUser> => {
-  const user = await UserModel.create({ email, gdprInfo });
+const createUser = async (email: string): Promise<IUser> => {
+  const user = await UserModel.create({ email });
   return user;
 };
 

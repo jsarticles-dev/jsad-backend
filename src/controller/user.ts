@@ -10,17 +10,17 @@ import logger from "../configs/logger";
 import { maskEmail } from "../helpers";
 
 const addUser = async (req: Request, res: Response) => {
-  const { email, gdprInfo } = req.body;
+  const { email } = req.body;
 
   const user = await findUserByEmail(email);
 
   if (user) {
     return res.status(400).json({
-      message: "User already exists",
+      message: "User already exists!",
     });
   }
 
-  const createdUser = await createUser(email, gdprInfo);
+  const createdUser = await createUser(email);
 
   if (createdUser._id) {
     logger.info(`User ${maskEmail(email)} created successfully!`);
