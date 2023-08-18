@@ -41,17 +41,11 @@ describe("User Models", () => {
   it("should insert a doc into user collection", async () => {
     const MOCK_USER = {
       email: "test@yopmail.com",
-      gdprInfo: {
-        isAccepted: true,
-        ip: "111.111.1.1",
-      },
     };
 
-    const createdUser = await createUser(MOCK_USER.email, MOCK_USER.gdprInfo);
+    const createdUser = await createUser(MOCK_USER.email);
 
     expect(createdUser.email).toBe(MOCK_USER.email);
-    expect(createdUser.gdprInfo.ip).toBe(MOCK_USER.gdprInfo.ip);
-    expect(createdUser.gdprInfo.isAccepted).toBe(MOCK_USER.gdprInfo.isAccepted);
     expect(createdUser.sentNewsletters).toEqual([]);
     expect(createdUser.createdAt).toBeInstanceOf(Date);
     expect(createdUser.updatedAt).toBeInstanceOf(Date);
@@ -61,22 +55,14 @@ describe("User Models", () => {
     const MOCK_USERS = [
       {
         email: "test@outlook.com",
-        gdprInfo: {
-          isAccepted: true,
-          ip: "111.111.1.1",
-        },
       },
       {
         email: "test@gmail.com",
-        gdprInfo: {
-          isAccepted: true,
-          ip: "111.111.1.2",
-        },
       },
     ];
 
-    await createUser(MOCK_USERS[0].email, MOCK_USERS[0].gdprInfo);
-    await createUser(MOCK_USERS[1].email, MOCK_USERS[1].gdprInfo);
+    await createUser(MOCK_USERS[0].email);
+    await createUser(MOCK_USERS[1].email);
 
     const users = await findUsers([]);
 
@@ -92,22 +78,14 @@ describe("User Models", () => {
     const MOCK_USERS = [
       {
         email: "test@outlook.com",
-        gdprInfo: {
-          isAccepted: true,
-          ip: "111.111.1.1",
-        },
       },
       {
         email: "test@gmail.com",
-        gdprInfo: {
-          isAccepted: true,
-          ip: "111.111.1.2",
-        },
       },
     ];
 
-    await createUser(MOCK_USERS[0].email, MOCK_USERS[0].gdprInfo);
-    await createUser(MOCK_USERS[1].email, MOCK_USERS[1].gdprInfo);
+    await createUser(MOCK_USERS[0].email);
+    await createUser(MOCK_USERS[1].email);
 
     const user = await findUserByEmail("test@outlook.com");
 
@@ -120,13 +98,9 @@ describe("User Models", () => {
   it("should find user by id", async () => {
     const MOCK_USER = {
       email: "test@outlook.com",
-      gdprInfo: {
-        isAccepted: true,
-        ip: "111.111.1.1",
-      },
     };
 
-    const createdUser = await createUser(MOCK_USER.email, MOCK_USER.gdprInfo);
+    const createdUser = await createUser(MOCK_USER.email);
 
     const user = await findUserById(createdUser?._id?.toString() || "");
 
@@ -138,13 +112,9 @@ describe("User Models", () => {
   it("should delete user", async () => {
     const MOCK_USER = {
       email: "test@outlook.com",
-      gdprInfo: {
-        isAccepted: true,
-        ip: "111.111.1.1",
-      },
     };
 
-    const createdUser = await createUser(MOCK_USER.email, MOCK_USER.gdprInfo);
+    const createdUser = await createUser(MOCK_USER.email);
 
     const deletedUser = await deleteUserById(
       createdUser?._id?.toString() || ""
