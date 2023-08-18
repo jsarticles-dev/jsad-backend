@@ -1,0 +1,7 @@
+node_modules
+.env.*
+dist
+error.log
+combined.log
+info.log
+jest-setup.js
