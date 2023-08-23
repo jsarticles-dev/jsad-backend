@@ -1,25 +1,12 @@
-# JSArticles.dev Backend
+<p align="center"><img width="344" alt="Screenshot 2023-08-23 at 13 30 26" src="https://github.com/jsarticles-dev/jsad-backend/assets/20026295/95c7cecd-88df-42f3-adda-daf78b47ca5b"></p>
 
-## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation and Setup](#installation-and-setup)
-- [API Documentation](#api-documentation)
-  - [User Routes](#user-routes)
-  - [Newsletter Routes](#newsletter-routes)
-  - [Employee Routes](#employee-routes)
-  - [Authentication Routes](#authentication-routes)
-- [Testing](#testing)
-- [License](#license)
 
 ## Introduction
 
 Welcome to the backend repository of JSArticles.dev project, a platform designed to deliver weekly newsletters to users. This project aims to provide a seamless and efficient way to manage and distribute newsletters.
 
-## Features
+## :rocket: Features
 
 - **Newsletter Management:** The backend enables newsletter creators to compose, schedule, and manage newsletters effortlessly.
 - **Subscriber Management:** Users can subscribe to newsletters of their choice, while creators can access subscriber lists.
@@ -27,7 +14,7 @@ Welcome to the backend repository of JSArticles.dev project, a platform designed
 - **Authentication and Security:** Robust authentication mechanisms ensure data privacy and secure access for both creators and subscribers.
 - **API-driven Design:** Our backend follows a RESTful API design, facilitating integration with frontend applications and third-party services.
 
-## Getting Started
+## :running_woman: Getting Started
 
 ### Prerequisites
 
@@ -38,7 +25,7 @@ Before you begin, ensure you have met the following requirements:
 - [Docker](https://www.docker.com/) (for Deployment)
 - [Prettier](https://prettier.io/)
 
-### Installation and Setup
+### Installation and Setup 
 
 **1- Clone the Repository:**
 
@@ -90,7 +77,7 @@ Compile TypeScript files:
 npm run build
 ```
 
-## API Documentation
+## :books: API Documentation
 
 ### User Routes
 
@@ -128,7 +115,7 @@ npm run build
 | --------------- | ------ | -------------- | ----------------------------------- |
 | `/auth/isValid` | GET    |                | Checks if a token is valid for auth |
 
-## Testing
+## :white_check_mark: Testing
 
 **Run Tests:**
 Use the following command to execute the tests:
