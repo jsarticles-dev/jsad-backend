@@ -21,7 +21,7 @@ Welcome to the backend repository of JSArticles.dev project, a platform designed
 ## :rocket: Features
 
 - **Newsletter Management:** The backend enables newsletter creators to compose, schedule, and manage newsletters effortlessly.
-- **Subscriber Management:** Users can subscribe to newsletters of their choice, while creators can access subscriber lists.
+- **Subscriber Management:** Users can subscribe to newsletter, while admins can access subscriber lists.
 - **Employee Management:** Employees can create newsletters and edit these newsletters based on their roles.
 - **Authentication and Security:** Robust authentication mechanisms ensure data privacy and secure access for both creators and subscribers.
 - **API-driven Design:** Our backend follows a RESTful API design, facilitating integration with frontend applications and third-party services.
